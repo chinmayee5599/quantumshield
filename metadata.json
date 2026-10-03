@@ -1,0 +1,6 @@
+{
+  "name": "QuantumShield — Hybrid Quantum-AI Cybersecurity Platform",
+  "description": "Defensive attack graph risk mitigation platform using QUBO formulation, QAOA quantum optimization, and classical baselines to find optimal cybersecurity control combinations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

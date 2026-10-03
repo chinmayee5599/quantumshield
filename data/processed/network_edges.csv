@@ -1,0 +1,85 @@
+edge_id,source,destination,relationship_type,service,protocol,port,trust_transition,allowed,exploitable_cve_id,description
+e_s_01,small_gw_01,small_web_01,network_traffic,HTTPS Ingress,TCP,443,ingress,true,CVE-2021-41773,Public internet requests forwarded to DMZ web server.
+e_s_02,small_gw_01,small_vpn_01,vpn_tunnel,SSL-VPN Portal,TCP,10443,ingress,true,CVE-2023-27997,Remote worker VPN gateway exposed to internet.
+e_s_03,small_web_01,small_app_01,api_call,Internal Backend API,HTTP,8080,lateral_escalation,true,CVE-2022-22965,Web server communicates with Spring ERP application backend.
+e_s_04,small_vpn_01,small_ws_01,network_traffic,LAN Tunnel Access,IP,0,lateral_escalation,true,,VPN clients bridge directly into Corporate LAN subnet.
+e_s_05,small_ws_01,small_admin_01,remote_management,Remote Desktop,RDP,3389,privilege_boundary,true,CVE-2019-0708,Workstation initiates remote desktop to administrative bastion.
+e_s_06,small_app_01,small_api_01,api_call,Partner Data Exchange,HTTPS,8443,same_zone,true,,Application server queries internal order API.
+e_s_07,small_app_01,small_db_gen_01,database_query,PostgreSQL Database,TCP,5432,same_zone,true,,ERP application pulls product catalog from general DB.
+e_s_08,small_app_01,small_db_fin_01,database_query,TDS SQL Connection,TCP,1433,privilege_boundary,true,,Direct billing transaction writes to finance database.
+e_s_09,small_admin_01,small_db_fin_01,remote_management,SQL Server Management,TCP,1433,privilege_boundary,true,,Administrator console has unrestricted management access to Finance DB.
+e_s_10,small_admin_01,small_auth_01,remote_management,Directory Administration,LDAPS,636,same_zone,true,,Admin manages user directory accounts.
+e_s_11,small_db_fin_01,small_backup_01,replication,Backup Agent Push,TCP,6162,same_zone,true,,Nightly incremental backup replication of finance ledger.
+e_s_12,small_admin_01,small_backup_01,remote_management,Backup Console Management,HTTPS,9443,same_zone,true,,Admin manages backup retention schedules.
+e_f_01,fin_inet_gw,fin_adc_citrix,network_traffic,HTTPS Ingress,TCP,443,ingress,true,CVE-2023-4966,Public traffic forwarded to Citrix ADC frontend.
+e_f_02,fin_inet_gw,fin_mft_gateway,api_call,ACH File Delivery,HTTPS,443,ingress,true,CVE-2023-34362,External bank file exchange pushes wire batches to MOVEit.
+e_f_03,fin_adc_citrix,fin_web_portal,network_traffic,Reverse Proxy Routing,HTTP,8080,same_zone,true,CVE-2021-44228,Citrix ADC proxies customer login traffic to portal frontend.
+e_f_04,fin_web_portal,fin_cache_redis,database_query,Session Validation,TCP,6379,lateral_escalation,true,,Web portal reads and writes customer session tokens.
+e_f_05,fin_web_portal,fin_app_txengine,api_call,Transaction Dispatch,gRPC,50051,lateral_escalation,true,CVE-2022-22965,Portal dispatches money transfer requests to payment engine.
+e_f_06,fin_mft_gateway,fin_msg_broker,api_call,ACH Ingestion Queue,OpenWire TCP,61616,lateral_escalation,true,CVE-2023-46604,MOVEit pushes received wire files to ActiveMQ queue.
+e_f_07,fin_msg_broker,fin_app_txengine,api_call,Queue Processing Event,TCP,9000,same_zone,true,,Transaction engine consumes clearing events from queue.
+e_f_08,fin_ws_trader,fin_ad_dc01,credential_relay,Kerberos Authentication,Kerberos / LDAP,88,privilege_boundary,true,CVE-2020-1472,Trader desktop requests Kerberos TGT tickets from domain controller.
+e_f_09,fin_ws_trader,fin_collab_wiki,network_traffic,Confluence HTTP,HTTP,8090,same_zone,true,CVE-2023-22515,Trader accesses internal documentation portal.
+e_f_10,fin_collab_wiki,fin_admin_jump,credential_relay,Hardcoded SSH Keys,SSH,22,privilege_boundary,true,,Confluence config file leaks administrative SSH keypair for jump host.
+e_f_11,fin_ws_ops,fin_vpn_bastion,vpn_tunnel,Admin Bastion Ingress,TCP,443,ingress,true,CVE-2023-27997,Ops staff initiates VPN to engineering bastion.
+e_f_12,fin_vpn_bastion,fin_admin_jump,remote_management,RDP Session,RDP,3389,lateral_escalation,true,CVE-2019-0708,VPN tunnel forwards RDP connection to administrative jump box.
+e_f_13,fin_ad_dc01,fin_admin_jump,remote_management,Domain Controller Admin Push,WinRM / SMB,5985,same_zone,true,,Domain admin tools synchronize with bastion.
+e_f_14,fin_admin_jump,fin_vault_kms,remote_management,Vault Management API,HTTPS,8200,privilege_boundary,true,,Administrator rotates or extracts master encryption keys.
+e_f_15,fin_app_txengine,fin_vault_kms,api_call,Transit Key Decryption,HTTPS,8200,privilege_boundary,true,,Transaction engine queries Vault to decrypt customer card numbers.
+e_f_16,fin_app_txengine,fin_db_ledger,database_query,Core Ledger SQL Transaction,SQL*Net / TCP,1521,privilege_boundary,true,,Direct SQL execution writing balance debits and credits.
+e_f_17,fin_admin_jump,fin_db_ledger,remote_management,DBA Administrative SQL Console,SQL*Net / TCP,1521,privilege_boundary,true,,Direct administrative DBA console with unmonitored dump rights.
+e_f_18,fin_vault_kms,fin_db_ledger,database_query,Transparent Data Encryption (TDE),Internal IPC,0,same_zone,true,,HSM unlocks transparent database encryption tablespaces.
+e_f_19,fin_db_ledger,fin_backup_vault,replication,Continuous Data Replication,TLS Storage,443,same_zone,true,,Replicates real-time write-ahead logs to backup vault.
+e_l_001,large_asset_01,large_asset_04,api_call,Port 1001,TCP,1001,lateral_escalation,true,CVE-2022-22965,Synthetic network transition from large_asset_01 to large_asset_04
+e_l_002,large_asset_01,large_asset_03,network_traffic,Port 1002,TCP,1002,lateral_escalation,true,CVE-2022-22965,Synthetic network transition from large_asset_01 to large_asset_03
+e_l_003,large_asset_02,large_asset_03,api_call,Port 1003,TCP,1003,lateral_escalation,true,CVE-2023-4966,Synthetic network transition from large_asset_02 to large_asset_03
+e_l_004,large_asset_02,large_asset_04,api_call,Port 1004,TCP,1004,lateral_escalation,true,CVE-2023-4966,Synthetic network transition from large_asset_02 to large_asset_04
+e_l_005,large_asset_03,large_asset_05,api_call,Port 1005,TCP,1005,lateral_escalation,true,CVE-2023-3824,Synthetic network transition from large_asset_03 to large_asset_05
+e_l_006,large_asset_04,large_asset_06,network_traffic,Port 1006,TCP,1006,lateral_escalation,true,CVE-2021-44228,Synthetic network transition from large_asset_04 to large_asset_06
+e_l_007,large_asset_04,large_asset_08,network_traffic,Port 1007,TCP,1007,lateral_escalation,true,CVE-2021-44228,Synthetic network transition from large_asset_04 to large_asset_08
+e_l_008,large_asset_05,large_asset_07,network_traffic,Port 1008,TCP,1008,lateral_escalation,true,,Synthetic network transition from large_asset_05 to large_asset_07
+e_l_009,large_asset_06,large_asset_08,network_traffic,Port 1009,TCP,1009,lateral_escalation,true,CVE-2021-44228,Synthetic network transition from large_asset_06 to large_asset_08
+e_l_010,large_asset_06,large_asset_11,api_call,Port 1010,TCP,1010,lateral_escalation,true,CVE-2021-44228,Synthetic network transition from large_asset_06 to large_asset_11
+e_l_011,large_asset_07,large_asset_08,network_traffic,Port 1011,TCP,1011,lateral_escalation,true,,Synthetic network transition from large_asset_07 to large_asset_08
+e_l_012,large_asset_07,large_asset_11,api_call,Port 1012,TCP,1012,lateral_escalation,true,,Synthetic network transition from large_asset_07 to large_asset_11
+e_l_013,large_asset_08,large_asset_10,network_traffic,Port 1013,TCP,1013,lateral_escalation,true,CVE-2022-41040,Synthetic network transition from large_asset_08 to large_asset_10
+e_l_014,large_asset_08,large_asset_12,api_call,Port 1014,TCP,1014,lateral_escalation,true,CVE-2022-41040,Synthetic network transition from large_asset_08 to large_asset_12
+e_l_015,large_asset_09,large_asset_12,network_traffic,Port 1015,TCP,1015,lateral_escalation,true,CVE-2023-34362,Synthetic network transition from large_asset_09 to large_asset_12
+e_l_016,large_asset_09,large_asset_14,api_call,Port 1016,TCP,1016,lateral_escalation,true,CVE-2023-34362,Synthetic network transition from large_asset_09 to large_asset_14
+e_l_017,large_asset_10,large_asset_11,network_traffic,Port 1017,TCP,1017,lateral_escalation,true,CVE-2023-28771,Synthetic network transition from large_asset_10 to large_asset_11
+e_l_018,large_asset_10,large_asset_12,network_traffic,Port 1018,TCP,1018,lateral_escalation,true,CVE-2023-28771,Synthetic network transition from large_asset_10 to large_asset_12
+e_l_019,large_asset_11,large_asset_14,network_traffic,Port 1019,TCP,1019,lateral_escalation,true,CVE-2021-4034,Synthetic network transition from large_asset_11 to large_asset_14
+e_l_020,large_asset_11,large_asset_16,network_traffic,Port 1020,TCP,1020,lateral_escalation,true,CVE-2021-4034,Synthetic network transition from large_asset_11 to large_asset_16
+e_l_021,large_asset_12,large_asset_15,network_traffic,Port 1021,TCP,1021,lateral_escalation,true,CVE-2022-1388,Synthetic network transition from large_asset_12 to large_asset_15
+e_l_022,large_asset_12,large_asset_17,api_call,Port 1022,TCP,1022,lateral_escalation,true,CVE-2022-1388,Synthetic network transition from large_asset_12 to large_asset_17
+e_l_023,large_asset_13,large_asset_15,network_traffic,Port 1023,TCP,1023,lateral_escalation,true,,Synthetic network transition from large_asset_13 to large_asset_15
+e_l_024,large_asset_13,large_asset_18,api_call,Port 1024,TCP,1024,lateral_escalation,true,,Synthetic network transition from large_asset_13 to large_asset_18
+e_l_025,large_asset_14,large_asset_17,api_call,Port 1025,TCP,1025,lateral_escalation,true,,Synthetic network transition from large_asset_14 to large_asset_17
+e_l_026,large_asset_14,large_asset_18,network_traffic,Port 1026,TCP,1026,lateral_escalation,true,,Synthetic network transition from large_asset_14 to large_asset_18
+e_l_027,large_asset_15,large_asset_16,api_call,Port 1027,TCP,1027,lateral_escalation,true,CVE-2023-27997,Synthetic network transition from large_asset_15 to large_asset_16
+e_l_028,large_asset_15,large_asset_18,api_call,Port 1028,TCP,1028,lateral_escalation,true,CVE-2023-27997,Synthetic network transition from large_asset_15 to large_asset_18
+e_l_029,large_asset_16,large_asset_18,network_traffic,Port 1029,TCP,1029,lateral_escalation,true,CVE-2022-26925,Synthetic network transition from large_asset_16 to large_asset_18
+e_l_030,large_asset_16,large_asset_20,network_traffic,Port 1030,TCP,1030,lateral_escalation,true,CVE-2022-26925,Synthetic network transition from large_asset_16 to large_asset_20
+e_l_031,large_asset_17,large_asset_19,api_call,Port 1031,TCP,1031,lateral_escalation,true,CVE-2023-4966,Synthetic network transition from large_asset_17 to large_asset_19
+e_l_032,large_asset_17,large_asset_21,api_call,Port 1032,TCP,1032,lateral_escalation,true,CVE-2023-4966,Synthetic network transition from large_asset_17 to large_asset_21
+e_l_033,large_asset_18,large_asset_19,api_call,Port 1033,TCP,1033,lateral_escalation,true,CVE-2019-0708,Synthetic network transition from large_asset_18 to large_asset_19
+e_l_034,large_asset_18,large_asset_20,api_call,Port 1034,TCP,1034,lateral_escalation,true,CVE-2019-0708,Synthetic network transition from large_asset_18 to large_asset_20
+e_l_035,large_asset_19,large_asset_21,network_traffic,Port 1035,TCP,1035,lateral_escalation,true,,Synthetic network transition from large_asset_19 to large_asset_21
+e_l_036,large_asset_19,large_asset_23,network_traffic,Port 1036,TCP,1036,lateral_escalation,true,,Synthetic network transition from large_asset_19 to large_asset_23
+e_l_037,large_asset_20,large_asset_21,network_traffic,Port 1037,TCP,1037,lateral_escalation,true,,Synthetic network transition from large_asset_20 to large_asset_21
+e_l_038,large_asset_20,large_asset_24,api_call,Port 1038,TCP,1038,lateral_escalation,true,,Synthetic network transition from large_asset_20 to large_asset_24
+e_l_039,large_asset_21,large_asset_23,api_call,Port 1039,TCP,1039,lateral_escalation,true,CVE-2023-3519,Synthetic network transition from large_asset_21 to large_asset_23
+e_l_040,large_asset_21,large_asset_24,api_call,Port 1040,TCP,1040,lateral_escalation,true,CVE-2023-3519,Synthetic network transition from large_asset_21 to large_asset_24
+e_l_041,large_asset_22,large_asset_23,network_traffic,Port 1041,TCP,1041,lateral_escalation,true,,Synthetic network transition from large_asset_22 to large_asset_23
+e_l_042,large_asset_22,large_asset_24,api_call,Port 1042,TCP,1042,lateral_escalation,true,,Synthetic network transition from large_asset_22 to large_asset_24
+e_l_043,large_asset_23,large_asset_25,network_traffic,Port 1043,TCP,1043,lateral_escalation,true,CVE-2021-26855,Synthetic network transition from large_asset_23 to large_asset_25
+e_l_044,large_asset_23,large_asset_27,api_call,Port 1044,TCP,1044,lateral_escalation,true,CVE-2021-26855,Synthetic network transition from large_asset_23 to large_asset_27
+e_l_045,large_asset_24,large_asset_25,api_call,Port 1045,TCP,1045,lateral_escalation,true,CVE-2021-3449,Synthetic network transition from large_asset_24 to large_asset_25
+e_l_046,large_asset_24,large_asset_26,network_traffic,Port 1046,TCP,1046,lateral_escalation,true,CVE-2021-3449,Synthetic network transition from large_asset_24 to large_asset_26
+e_l_047,large_asset_25,large_asset_26,api_call,Port 1047,TCP,1047,lateral_escalation,true,,Synthetic network transition from large_asset_25 to large_asset_26
+e_l_048,large_asset_25,large_asset_30,database_query,Port 1048,TCP,1048,privilege_boundary,true,,Synthetic network transition from large_asset_25 to large_asset_30
+e_l_049,large_asset_26,large_asset_28,network_traffic,Port 1049,TCP,1049,lateral_escalation,true,,Synthetic network transition from large_asset_26 to large_asset_28
+e_l_050,large_asset_27,large_asset_28,api_call,Port 1050,TCP,1050,lateral_escalation,true,CVE-2023-28771,Synthetic network transition from large_asset_27 to large_asset_28
+e_l_051,large_asset_27,large_asset_30,database_query,Port 1051,TCP,1051,privilege_boundary,true,CVE-2023-28771,Synthetic network transition from large_asset_27 to large_asset_30
+e_l_052,large_asset_28,large_asset_30,database_query,Port 1052,TCP,1052,privilege_boundary,true,CVE-2022-1388,Synthetic network transition from large_asset_28 to large_asset_30
+e_l_053,large_asset_29,large_asset_30,database_query,Port 1053,TCP,1053,privilege_boundary,true,,Synthetic network transition from large_asset_29 to large_asset_30

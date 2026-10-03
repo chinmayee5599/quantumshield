@@ -1,0 +1,661 @@
+{
+  "scenario_id": "small_enterprise",
+  "scenario_name": "Scenario 1: Small Enterprise Network",
+  "scenario_category": "small",
+  "seed": 42,
+  "description": "Fast demo topology consisting of 12 assets, perimeter gateway, web tier, and corporate accounting database.",
+  "entry_point_asset_ids": [
+    "small_gw_01"
+  ],
+  "crown_jewel_asset_ids": [
+    "small_db_fin_01"
+  ],
+  "assets": [
+    {
+      "asset_id": "small_gw_01",
+      "asset_name": "Edge Perimeter Gateway",
+      "asset_type": "internet_gateway",
+      "business_role": "External Border Router & Ingress Filter",
+      "criticality": "HIGH",
+      "trust_level": 1,
+      "network_zone": "perimeter_dmz",
+      "operating_environment": "VyOS Linux Router",
+      "description": "Border gateway facing public internet, routing inbound traffic to DMZ.",
+      "assigned_cves": [
+        "CVE-2023-28771"
+      ]
+    },
+    {
+      "asset_id": "small_web_01",
+      "asset_name": "Corporate Web Portal",
+      "asset_type": "web_server",
+      "business_role": "Customer Marketing & Inquiry Frontend",
+      "criticality": "HIGH",
+      "trust_level": 2,
+      "network_zone": "perimeter_dmz",
+      "operating_environment": "Apache HTTP 2.4.49 / Ubuntu LTS",
+      "description": "Public facing web server hosting corporate website.",
+      "assigned_cves": [
+        "CVE-2021-41773",
+        "CVE-2023-3824"
+      ]
+    },
+    {
+      "asset_id": "small_app_01",
+      "asset_name": "Business ERP Application Server",
+      "asset_type": "application_server",
+      "business_role": "Internal Work Order & Invoicing Processing",
+      "criticality": "HIGH",
+      "trust_level": 3,
+      "network_zone": "corporate_lan",
+      "operating_environment": "Spring Boot 2.5 on OpenJDK 11",
+      "description": "Application server handling internal billing and supplier logistics.",
+      "assigned_cves": [
+        "CVE-2022-22965"
+      ]
+    },
+    {
+      "asset_id": "small_ws_01",
+      "asset_name": "Office Reception Workstation",
+      "asset_type": "employee_workstation",
+      "business_role": "Front-desk visitor check-in and email workstation",
+      "criticality": "MEDIUM",
+      "trust_level": 2,
+      "network_zone": "corporate_lan",
+      "operating_environment": "Windows 10 Enterprise 21H2",
+      "description": "End-user desktop used by office coordinator, receiving external emails.",
+      "assigned_cves": [
+        "CVE-2024-21413",
+        "CVE-2022-30190"
+      ]
+    },
+    {
+      "asset_id": "small_vpn_01",
+      "asset_name": "Remote Access VPN Appliance",
+      "asset_type": "vpn_gateway",
+      "business_role": "Employee Remote Access Ingress",
+      "criticality": "HIGH",
+      "trust_level": 2,
+      "network_zone": "perimeter_dmz",
+      "operating_environment": "Fortinet FortiOS SSL-VPN",
+      "description": "SSL-VPN endpoint used by remote workers to dial into corporate network.",
+      "assigned_cves": [
+        "CVE-2023-27997"
+      ]
+    },
+    {
+      "asset_id": "small_auth_01",
+      "asset_name": "Central Identity & LDAP Server",
+      "asset_type": "authentication_server",
+      "business_role": "User Authentication & Single Sign-On",
+      "criticality": "CRITICAL",
+      "trust_level": 4,
+      "network_zone": "management_vlan",
+      "operating_environment": "OpenLDAP / Kerberos on Debian",
+      "description": "Directory server validating enterprise user credentials.",
+      "assigned_cves": []
+    },
+    {
+      "asset_id": "small_api_01",
+      "asset_name": "Internal Partner REST API",
+      "asset_type": "internal_api_server",
+      "business_role": "B2B order integration gateway",
+      "criticality": "MEDIUM",
+      "trust_level": 3,
+      "network_zone": "corporate_lan",
+      "operating_environment": "Node.js Express / Docker",
+      "description": "Middleware API bridging order requests with back-office databases.",
+      "assigned_cves": []
+    },
+    {
+      "asset_id": "small_db_gen_01",
+      "asset_name": "General Operational Database",
+      "asset_type": "general_database",
+      "business_role": "Inventory & Inventory Catalog Data Store",
+      "criticality": "MEDIUM",
+      "trust_level": 4,
+      "network_zone": "corporate_lan",
+      "operating_environment": "PostgreSQL 13 on Ubuntu",
+      "description": "Relational database storing non-sensitive product inventory.",
+      "assigned_cves": []
+    },
+    {
+      "asset_id": "small_admin_01",
+      "asset_name": "IT Administrative Bastion",
+      "asset_type": "admin_server",
+      "business_role": "Systems Management & Remote RDP Bastion",
+      "criticality": "HIGH",
+      "trust_level": 4,
+      "network_zone": "management_vlan",
+      "operating_environment": "Windows Server 2019",
+      "description": "Administrative jump box used for fleet management.",
+      "assigned_cves": [
+        "CVE-2019-0708"
+      ]
+    },
+    {
+      "asset_id": "small_db_fin_01",
+      "asset_name": "Corporate Accounting & Payroll DB",
+      "asset_type": "finance_database",
+      "business_role": "Core General Ledger and Employee Bank Details",
+      "criticality": "CRITICAL",
+      "trust_level": 5,
+      "network_zone": "core_vault",
+      "operating_environment": "Encrypted Microsoft SQL Server 2019",
+      "description": "Crown Jewel storing company financial ledger and salary disbursements.",
+      "assigned_cves": []
+    },
+    {
+      "asset_id": "small_backup_01",
+      "asset_name": "Nightly Backup Repository",
+      "asset_type": "backup_server",
+      "business_role": "Disaster Recovery Storage Repository",
+      "criticality": "HIGH",
+      "trust_level": 4,
+      "network_zone": "management_vlan",
+      "operating_environment": "Veeam Backup Appliance on Linux",
+      "description": "Local snapshot repository containing incremental database backups.",
+      "assigned_cves": []
+    },
+    {
+      "asset_id": "small_mon_01",
+      "asset_name": "Network Monitoring & Syslog",
+      "asset_type": "monitoring_server",
+      "business_role": "SNMP Telemetry and Central Log Aggregator",
+      "criticality": "LOW",
+      "trust_level": 3,
+      "network_zone": "management_vlan",
+      "operating_environment": "Zabbix / Elasticsearch",
+      "description": "Monitors server heartbeats and ingests syslog streams.",
+      "assigned_cves": []
+    }
+  ],
+  "network_edges": [
+    {
+      "edge_id": "e_s_01",
+      "source": "small_gw_01",
+      "destination": "small_web_01",
+      "relationship_type": "network_traffic",
+      "service": "HTTPS Ingress",
+      "protocol": "TCP",
+      "port": 443,
+      "trust_transition": "ingress",
+      "allowed": true,
+      "exploitable_cve_id": "CVE-2021-41773",
+      "description": "Public internet requests forwarded to DMZ web server."
+    },
+    {
+      "edge_id": "e_s_02",
+      "source": "small_gw_01",
+      "destination": "small_vpn_01",
+      "relationship_type": "vpn_tunnel",
+      "service": "SSL-VPN Portal",
+      "protocol": "TCP",
+      "port": 10443,
+      "trust_transition": "ingress",
+      "allowed": true,
+      "exploitable_cve_id": "CVE-2023-27997",
+      "description": "Remote worker VPN gateway exposed to internet."
+    },
+    {
+      "edge_id": "e_s_03",
+      "source": "small_web_01",
+      "destination": "small_app_01",
+      "relationship_type": "api_call",
+      "service": "Internal Backend API",
+      "protocol": "HTTP",
+      "port": 8080,
+      "trust_transition": "lateral_escalation",
+      "allowed": true,
+      "exploitable_cve_id": "CVE-2022-22965",
+      "description": "Web server communicates with Spring ERP application backend."
+    },
+    {
+      "edge_id": "e_s_04",
+      "source": "small_vpn_01",
+      "destination": "small_ws_01",
+      "relationship_type": "network_traffic",
+      "service": "LAN Tunnel Access",
+      "protocol": "IP",
+      "port": 0,
+      "trust_transition": "lateral_escalation",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "VPN clients bridge directly into Corporate LAN subnet."
+    },
+    {
+      "edge_id": "e_s_05",
+      "source": "small_ws_01",
+      "destination": "small_admin_01",
+      "relationship_type": "remote_management",
+      "service": "Remote Desktop",
+      "protocol": "RDP",
+      "port": 3389,
+      "trust_transition": "privilege_boundary",
+      "allowed": true,
+      "exploitable_cve_id": "CVE-2019-0708",
+      "description": "Workstation initiates remote desktop to administrative bastion."
+    },
+    {
+      "edge_id": "e_s_06",
+      "source": "small_app_01",
+      "destination": "small_api_01",
+      "relationship_type": "api_call",
+      "service": "Partner Data Exchange",
+      "protocol": "HTTPS",
+      "port": 8443,
+      "trust_transition": "same_zone",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Application server queries internal order API."
+    },
+    {
+      "edge_id": "e_s_07",
+      "source": "small_app_01",
+      "destination": "small_db_gen_01",
+      "relationship_type": "database_query",
+      "service": "PostgreSQL Database",
+      "protocol": "TCP",
+      "port": 5432,
+      "trust_transition": "same_zone",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "ERP application pulls product catalog from general DB."
+    },
+    {
+      "edge_id": "e_s_08",
+      "source": "small_app_01",
+      "destination": "small_db_fin_01",
+      "relationship_type": "database_query",
+      "service": "TDS SQL Connection",
+      "protocol": "TCP",
+      "port": 1433,
+      "trust_transition": "privilege_boundary",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Direct billing transaction writes to finance database."
+    },
+    {
+      "edge_id": "e_s_09",
+      "source": "small_admin_01",
+      "destination": "small_db_fin_01",
+      "relationship_type": "remote_management",
+      "service": "SQL Server Management",
+      "protocol": "TCP",
+      "port": 1433,
+      "trust_transition": "privilege_boundary",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Administrator console has unrestricted management access to Finance DB."
+    },
+    {
+      "edge_id": "e_s_10",
+      "source": "small_admin_01",
+      "destination": "small_auth_01",
+      "relationship_type": "remote_management",
+      "service": "Directory Administration",
+      "protocol": "LDAPS",
+      "port": 636,
+      "trust_transition": "same_zone",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Admin manages user directory accounts."
+    },
+    {
+      "edge_id": "e_s_11",
+      "source": "small_db_fin_01",
+      "destination": "small_backup_01",
+      "relationship_type": "replication",
+      "service": "Backup Agent Push",
+      "protocol": "TCP",
+      "port": 6162,
+      "trust_transition": "same_zone",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Nightly incremental backup replication of finance ledger."
+    },
+    {
+      "edge_id": "e_s_12",
+      "source": "small_admin_01",
+      "destination": "small_backup_01",
+      "relationship_type": "remote_management",
+      "service": "Backup Console Management",
+      "protocol": "HTTPS",
+      "port": 9443,
+      "trust_transition": "same_zone",
+      "allowed": true,
+      "exploitable_cve_id": null,
+      "description": "Admin manages backup retention schedules."
+    }
+  ],
+  "permissions": [
+    {
+      "permission_id": "perm_s_01",
+      "source_identity": "user:receptionist",
+      "target_asset": "small_ws_01",
+      "privilege_level": "User",
+      "relationship_type": "local_logon",
+      "escalation_possible": true,
+      "description": "Local standard user privileges on front-desk computer."
+    },
+    {
+      "permission_id": "perm_s_02",
+      "source_identity": "user:receptionist",
+      "target_asset": "small_vpn_01",
+      "privilege_level": "User",
+      "relationship_type": "local_logon",
+      "escalation_possible": false,
+      "description": "Standard VPN account credential."
+    },
+    {
+      "permission_id": "perm_s_03",
+      "source_identity": "service:erp_daemon",
+      "target_asset": "small_app_01",
+      "privilege_level": "Execute",
+      "relationship_type": "service_principal",
+      "escalation_possible": true,
+      "description": "Local system service account running application server."
+    },
+    {
+      "permission_id": "perm_s_04",
+      "source_identity": "service:erp_daemon",
+      "target_asset": "small_db_fin_01",
+      "privilege_level": "Write",
+      "relationship_type": "database_admin",
+      "escalation_possible": false,
+      "description": "Database connection credentials with INSERT/UPDATE rights."
+    },
+    {
+      "permission_id": "perm_s_05",
+      "source_identity": "role:it_sysadmin",
+      "target_asset": "small_admin_01",
+      "privilege_level": "Administrative",
+      "relationship_type": "rdp_access",
+      "escalation_possible": false,
+      "description": "Domain administrator logon to management jump box."
+    },
+    {
+      "permission_id": "perm_s_06",
+      "source_identity": "role:it_sysadmin",
+      "target_asset": "small_db_fin_01",
+      "privilege_level": "System_Root",
+      "relationship_type": "database_admin",
+      "escalation_possible": false,
+      "description": "Full database SA rights across finance repositories."
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "ctrl_s_patch_web",
+      "control_name": "Emergency Web & PHP Patching",
+      "control_category": "Vulnerability_Patching",
+      "description": "Patch Apache HTTP Server (CVE-2021-41773) and PHP interpreter (CVE-2023-3824).",
+      "deployment_cost": 3,
+      "operational_friction": 1,
+      "affected_asset_types": [
+        "web_server"
+      ],
+      "affected_edges": [
+        "e_s_01"
+      ],
+      "implementation_assumption": "Rolling container rebuild and automated smoke testing in DMZ."
+    },
+    {
+      "control_id": "ctrl_s_patch_vpn",
+      "control_name": "VPN Firmware Update (FortiOS)",
+      "control_category": "Vulnerability_Patching",
+      "description": "Apply security patch for Fortinet FortiOS heap overflow (CVE-2023-27997).",
+      "deployment_cost": 4,
+      "operational_friction": 2,
+      "affected_asset_types": [
+        "vpn_gateway"
+      ],
+      "affected_edges": [
+        "e_s_02"
+      ],
+      "implementation_assumption": "Scheduled 15-minute maintenance window for gateway reboot."
+    },
+    {
+      "control_id": "ctrl_s_mfa_vpn",
+      "control_name": "FIDO2 Hardware MFA on VPN Gateway",
+      "control_category": "Multi_Factor_Authentication",
+      "description": "Mandate hardware FIDO2 authentication for all inbound SSL-VPN connections.",
+      "deployment_cost": 5,
+      "operational_friction": 3,
+      "affected_asset_types": [
+        "vpn_gateway",
+        "employee_workstation"
+      ],
+      "affected_edges": [
+        "e_s_02",
+        "e_s_04"
+      ],
+      "implementation_assumption": "Hardware keys distributed to staff; biometric fallback enabled."
+    },
+    {
+      "control_id": "ctrl_s_seg_dmz",
+      "control_name": "DMZ-to-LAN Strict Microsegmentation",
+      "control_category": "Network_Segmentation",
+      "description": "Block direct ingress from DMZ Web Server to internal ERP port 8080.",
+      "deployment_cost": 6,
+      "operational_friction": 3,
+      "affected_asset_types": [
+        "web_server",
+        "application_server"
+      ],
+      "affected_edges": [
+        "e_s_03"
+      ],
+      "implementation_assumption": "Enforce stateful firewall proxy with request payload inspection."
+    },
+    {
+      "control_id": "ctrl_s_patch_rdp",
+      "control_name": "Patch BlueKeep on Admin Jump Host",
+      "control_category": "Vulnerability_Patching",
+      "description": "Apply Microsoft security rollup remediating CVE-2019-0708 on administrative bastion.",
+      "deployment_cost": 3,
+      "operational_friction": 1,
+      "affected_asset_types": [
+        "admin_server"
+      ],
+      "affected_edges": [
+        "e_s_05"
+      ],
+      "implementation_assumption": "Standard WSUS update cycle with automated regression rollback."
+    },
+    {
+      "control_id": "ctrl_s_vault_proxy",
+      "control_name": "Finance DB Mutual-TLS Proxy Isolation",
+      "control_category": "Zero_Trust_Access",
+      "description": "Isolate Finance Database behind an Envoy mTLS proxy requiring signed JWT tokens.",
+      "deployment_cost": 8,
+      "operational_friction": 4,
+      "affected_asset_types": [
+        "finance_database"
+      ],
+      "affected_edges": [
+        "e_s_08",
+        "e_s_09"
+      ],
+      "implementation_assumption": "All application and administrative queries pass through TLS client cert inspection."
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "cve_id": "CVE-2019-0708",
+      "published_date": "2019-05-16T19:29:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "Microsoft Remote Desktop Services (BlueKeep)",
+      "affected_category": "Remote Desktop Protocol (RDP)",
+      "description": "A remote code execution vulnerability exists in Remote Desktop Services when an unauthenticated attacker connects to the target system using RDP and sends specially crafted requests, aka Remote Desktop Services Remote Code Execution Vulnerability (BlueKeep).",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2019-0708",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2023-27997",
+      "published_date": "2023-06-13T15:15:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "Fortinet FortiOS SSL-VPN (Volt Typhoon / Heap Overflow)",
+      "affected_category": "Enterprise VPN Gateway",
+      "description": "A heap-based buffer overflow vulnerability in FortiOS and FortiProxy SSL-VPN allows an unauthenticated remote attacker to execute arbitrary code or commands via specially crafted requests.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2023-27997",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2024-21413",
+      "published_date": "2024-02-13T18:15:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "Microsoft Outlook (MonikerLink RCE)",
+      "affected_category": "Endpoint Email Client / Office Suite",
+      "description": "Microsoft Outlook Remote Code Execution Vulnerability (MonikerLink). An attacker sending a crafted email with a file:// link bypassing Protected View can trigger NTLM credential leaks and arbitrary code execution.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21413",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2022-30190",
+      "published_date": "2022-06-01T15:15:00Z",
+      "cvss_v3_base_score": 7.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+      "severity": "HIGH",
+      "attack_vector": "LOCAL",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "REQUIRED",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 1.8,
+      "impact_subscore": 5.9,
+      "affected_product": "Microsoft Windows Support Diagnostic Tool (MSDT / Follina)",
+      "affected_category": "Client Endpoint Operating System",
+      "description": "Microsoft Windows Support Diagnostic Tool (MSDT) Remote Code Execution Vulnerability (Follina). An attacker can call MSDT using the URL protocol from an application such as Word to run arbitrary code with the calling process privileges.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2022-30190",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2022-22965",
+      "published_date": "2022-04-01T23:15:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "Spring Framework ClassLoader Data Binding (Spring4Shell)",
+      "affected_category": "Enterprise Application Framework",
+      "description": "Spring Framework RCE via Data Binding on JDK 9+. A Spring MVC or Spring WebFlux application running on JDK 9+ may be vulnerable to remote code execution via data binding using class loader access.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2022-22965",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2021-41773",
+      "published_date": "2021-10-05T11:15:00Z",
+      "cvss_v3_base_score": 7.5,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "severity": "HIGH",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "NONE",
+      "availability_impact": "NONE",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 3.6,
+      "affected_product": "Apache HTTP Server Path Traversal (2.4.49)",
+      "affected_category": "Web Server / HTTP Reverse Proxy",
+      "description": "A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2021-41773",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2023-28771",
+      "published_date": "2023-04-25T03:15:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "Zyxel IKE Packet Processing Command Injection",
+      "affected_category": "Hardware Firewall / VPN Gateway",
+      "description": "Improper error message handling in the IKE packet decoder of Zyxel firewall firmware versions could allow an unauthenticated attacker to execute arbitrary OS commands by sending crafted packets to UDP port 500.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28771",
+      "is_synthetic": false
+    },
+    {
+      "cve_id": "CVE-2023-3824",
+      "published_date": "2023-08-07T14:15:00Z",
+      "cvss_v3_base_score": 9.8,
+      "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "attack_complexity": "LOW",
+      "privileges_required": "NONE",
+      "user_interaction": "NONE",
+      "scope": "UNCHANGED",
+      "confidentiality_impact": "HIGH",
+      "integrity_impact": "HIGH",
+      "availability_impact": "HIGH",
+      "exploitability_subscore": 3.9,
+      "impact_subscore": 5.9,
+      "affected_product": "PHP phar Buffer Overflow",
+      "affected_category": "Web Programming Language Interpreter",
+      "description": "In PHP versions 8.0.*, 8.1.*, 8.2.*, when loading phar file, while reading directory entries, directory name is not verified for directory length, resulting in buffer overflow and potential remote code execution.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2023-3824",
+      "is_synthetic": false
+    }
+  ]
+}

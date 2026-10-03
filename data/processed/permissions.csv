@@ -1,0 +1,32 @@
+permission_id,source_identity,target_asset,privilege_level,relationship_type,escalation_possible,description
+perm_s_01,user:receptionist,small_ws_01,User,local_logon,true,Local standard user privileges on front-desk computer.
+perm_s_02,user:receptionist,small_vpn_01,User,local_logon,false,Standard VPN account credential.
+perm_s_03,service:erp_daemon,small_app_01,Execute,service_principal,true,Local system service account running application server.
+perm_s_04,service:erp_daemon,small_db_fin_01,Write,database_admin,false,Database connection credentials with INSERT/UPDATE rights.
+perm_s_05,role:it_sysadmin,small_admin_01,Administrative,rdp_access,false,Domain administrator logon to management jump box.
+perm_s_06,role:it_sysadmin,small_db_fin_01,System_Root,database_admin,false,Full database SA rights across finance repositories.
+perm_f_01,user:trader_corp,fin_ws_trader,User,local_logon,true,Standard trader domain account login.
+perm_f_02,user:ops_clerk,fin_ws_ops,User,local_logon,true,Settlement clerk standard domain login.
+perm_f_03,service:netscaler_proxy,fin_adc_citrix,Administrative,service_principal,false,ADC root daemon process.
+perm_f_04,service:tx_engine_svc,fin_app_txengine,Execute,service_principal,true,Kubernetes worker container runtime account.
+perm_f_05,service:tx_engine_svc,fin_db_ledger,Write,database_admin,false,Oracle database application schema user (LEDGER_APP).
+perm_f_06,role:domain_admin,fin_ad_dc01,System_Root,local_logon,false,Active Directory Enterprise Admins group member.
+perm_f_07,role:domain_admin,fin_admin_jump,Administrative,rdp_access,false,Administrative RDP group permissions on bastion.
+perm_f_08,role:master_dba,fin_admin_jump,Administrative,rdp_access,false,DBA team bastion access.
+perm_f_09,role:master_dba,fin_db_ledger,System_Root,database_admin,false,SYSDBA root administrative rights on core financial database.
+perm_f_10,role:secops_analyst,fin_siem_soc,Administrative,local_logon,false,SIEM management privileges.
+perm_l_01,role:enterprise_operator_1,large_asset_02,User,local_logon,false,Enterprise operational permission assignment 1.
+perm_l_02,role:enterprise_operator_2,large_asset_03,User,local_logon,true,Enterprise operational permission assignment 2.
+perm_l_03,role:enterprise_operator_3,large_asset_04,User,rdp_access,false,Enterprise operational permission assignment 3.
+perm_l_04,role:enterprise_operator_4,large_asset_05,Administrative,local_logon,true,Enterprise operational permission assignment 4.
+perm_l_05,role:enterprise_operator_5,large_asset_06,User,local_logon,false,Enterprise operational permission assignment 5.
+perm_l_06,role:enterprise_operator_6,large_asset_07,User,rdp_access,true,Enterprise operational permission assignment 6.
+perm_l_07,role:enterprise_operator_7,large_asset_08,User,local_logon,false,Enterprise operational permission assignment 7.
+perm_l_08,role:enterprise_operator_8,large_asset_09,Administrative,local_logon,true,Enterprise operational permission assignment 8.
+perm_l_09,role:enterprise_operator_9,large_asset_10,User,rdp_access,false,Enterprise operational permission assignment 9.
+perm_l_10,role:enterprise_operator_10,large_asset_11,User,local_logon,true,Enterprise operational permission assignment 10.
+perm_l_11,role:enterprise_operator_11,large_asset_12,User,local_logon,false,Enterprise operational permission assignment 11.
+perm_l_12,role:enterprise_operator_12,large_asset_13,Administrative,rdp_access,true,Enterprise operational permission assignment 12.
+perm_l_13,role:enterprise_operator_13,large_asset_14,User,local_logon,false,Enterprise operational permission assignment 13.
+perm_l_14,role:enterprise_operator_14,large_asset_15,User,local_logon,true,Enterprise operational permission assignment 14.
+perm_l_15,role:enterprise_operator_15,large_asset_16,User,rdp_access,false,Enterprise operational permission assignment 15.
